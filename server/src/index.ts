@@ -1,21 +1,21 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import mongoose from 'mongoose'
 import Deck from "./models/Deck";
+import { config } from 'dotenv'
 
+config()
 const PORT = 5000
 const app = express()
 
-app.get("/", (req, res) => {
-    res.send("gg")
-})
+app.use(express.json())//especificando que los datos se manejarán como json
 
-app.get("/hello", (req, res) => {
-    res.send("hello world")
-})
+app.post("/decks", async (req, res) => {
+    const newDeck = new Deck({ title: req.body.title })
+    const createdDeck = await newDeck.save()
+    res.json(createdDeck)
+})//añadiendo un registro a la bd
 
-mongoose.connect(
-    'mongodb+srv://flashcardsage:5PzLXCj8v7nLVoKb@cluster0.pjfelzr.mongodb.net/?retryWrites=true&w=majority'
-).then(() => {
-    console.log(`listening on port ${PORT}`)
+mongoose.connect(process.env.MONGO_URL!).then(() => {
+    console.log(`escuchando en el puerto ${PORT}`)
     app.listen(PORT)//conectándose a la bd
 })
