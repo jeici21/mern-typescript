@@ -11,7 +11,7 @@ const app = express()
 app.use(cors({ origin: "*" }))//garantizando el acceso a editar la bd desde cualquier origen
 app.use(express.json())//especificando que los datos se manejarán como json
 
-app.get('/decks',async (req, res) => {
+app.get('/decks', async (req, res) => {
     const decks = await Deck.find()
     res.json(decks)
 })//mostrando todos los registros en formato json

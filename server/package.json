@@ -4,7 +4,7 @@
   "description": "Mi primer proyecto MERN",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch \"src/**\" --ext \"ts, json\" --exec \"ts-node src/index.ts\""
+    "dev": "nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/index.ts\""
   },
   "keywords": [
     "Typescript",
