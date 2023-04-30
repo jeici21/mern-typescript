@@ -23,6 +23,6 @@ app.post("/decks", async (req, res) => {
 })//añadiendo un registro a la bd en formato json
 
 mongoose.connect(process.env.MONGO_URL!).then(() => {
-    console.log(`escuchando en el puerto ${PORT}`)
+    console.log(`Servidor escuchando en el puerto ${PORT}`)
     app.listen(PORT)//conectándose a la bd
 })
