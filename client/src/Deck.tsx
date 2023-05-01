@@ -3,6 +3,8 @@ import { createCard } from "./api/createCard"
 import { useParams } from "react-router-dom"
 import { getDeck } from "./api/getDeck"
 import { TDeck } from "./api/config"
+import { deleteCard } from "./api/deleteCard"
+import './Deck.css'
 
 const Deck = () => {
     const [deck, setDeck] = useState<TDeck | undefined>()
@@ -17,11 +19,12 @@ const Deck = () => {
         setText("")
     }//creando carta
 
-    /*     async function handleDeleteDeck(deckId: string) {
-            await deleteDeck(deckId)
-            setDecks(decks.filter(deck => deck._id !== deckId))
-        }
-     */
+    async function handleDeleteCard(index: number) {
+        if (!deckId) return
+        const newDeck = await deleteCard(deckId, index)
+        setCards(newDeck.cards)
+    }//borrando carta
+
     useEffect(() => {
         async function fetchDeck() {
             if (!deckId) return
@@ -33,11 +36,12 @@ const Deck = () => {
     }, [deckId])//obteniendo datos de la carta seleccionada
 
     return (
-        <div className='App'>
-            <ul className='decks'>
-                {cards.map(card => (
-                    <li key={card}>
-                        {/* <button onClick={() => handleDeleteDeck(deck._id)}>X</button> */}
+        <div className='Deck'>
+            <h1>{deck?.title}</h1>
+            <ul className='cards'>
+                {cards.map((card, index) => (
+                    <li key={index}>
+                        <button onClick={() => handleDeleteCard(index)}>X</button>
                         {card}
                     </li>
                 ))}

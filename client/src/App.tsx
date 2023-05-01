@@ -31,20 +31,23 @@ function App() {
   }, [])//recibiendo todos los registros en el front
 
   return (
-    <div className='App'>
-      <ul className='decks'>
-        {decks.map(deck => (
-          <li key={deck._id}>
-            <button onClick={() => handleDeleteDeck(deck._id)}>X</button>
-            <Link to={`decks/${deck._id}`}>{deck.title}</Link>
-          </li>
-        ))}
-      </ul>
-      <form onSubmit={handleCreateDeck}>
-        <label htmlFor='deck-title'>Título del Deck</label>
-        <input id='deck-title' value={title} onChange={e => setTitle(e.target.value)} />
-        <button>Crear Deck</button>
-      </form>
+    <div className='container'>
+      <div className='App'>
+        <h1>Tus Decks</h1>
+        <ul className='decks'>
+          {decks.map(deck => (
+            <li key={deck._id}>
+              <button onClick={() => handleDeleteDeck(deck._id)}>X</button>
+              <Link to={`decks/${deck._id}`}>{deck.title}</Link>
+            </li>
+          ))}
+        </ul>
+        <form onSubmit={handleCreateDeck}>
+          <label htmlFor='deck-title'>Título del Deck</label>
+          <input id='deck-title' value={title} onChange={e => setTitle(e.target.value)} />
+          <button>Crear Deck</button>
+        </form>
+      </div>
     </div>
   )
 }
