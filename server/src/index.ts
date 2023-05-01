@@ -1,10 +1,12 @@
 import express from "express";
 import mongoose from 'mongoose'
-import Deck from "./models/Deck";
 import { config } from 'dotenv'
 import cors from 'cors'
-
-type TDeck = { title: string }
+import { getDecksController } from "./controllers/getDecksController";
+import { createDeckController } from "./controllers/createDeckController";
+import { deleteDeckController } from "./controllers/deleteDeckController";
+import { createCardForDeckController } from "./controllers/createCardForDeckController";
+import { getDeckController } from "./controllers/getDeckController";
 
 config()
 const PORT = 5000
@@ -13,22 +15,11 @@ const app = express()
 app.use(cors({ origin: "*" }))//garantizando el acceso a editar la bd desde cualquier origen
 app.use(express.json())//especificando que los datos se manejarán como json
 
-app.get('/decks', async (req, res) => {
-    const decks = await Deck.find()
-    res.json(decks)
-})//mostrando todos los registros en formato json
-
-app.post("/decks", async (req, res) => {
-    const newDeck = new Deck(req.body as TDeck)
-    const createdDeck = await newDeck.save()
-    res.json(createdDeck)
-})//añadiendo un registro a la bd en formato json
-
-app.delete('/decks/:deckId', async (req, res) => {
-    const deckId = req.params.deckId
-    const deck = await Deck.findByIdAndDelete(deckId)
-    res.json(deck)
-})//borrando el registro seleccionado
+app.get('/decks', getDecksController)//mostrando todos los registros en formato json
+app.post("/decks", createDeckController)//añadiendo un registro a la bd en formato json
+app.delete('/decks/:deckId', deleteDeckController)//borrando el registro seleccionado
+app.get('/decks/:deckId', getDeckController)//mostrando la carta seleccionada
+app.post("/decks/:deckId/cards", createCardForDeckController)//añadiendo carta al deck seleccionado
 
 mongoose.connect(process.env.MONGO_URL!).then(() => {
     console.log(`Servidor escuchando en el puerto ${PORT}`)
