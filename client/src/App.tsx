@@ -12,7 +12,7 @@ function App() {
     const response = await fetch('http://localhost:5000/decks', {
       method: 'POST', body: JSON.stringify({ title }), headers: { "Content-Type": "application/json" }
     })//conectando con el server y guardando el ingreso en formato json
-    const deck = await response.json()
+    const deck: TDeck = await response.json()
     setDecks([...decks, deck])
     setTitle("")//vaciando el input
   }
@@ -27,7 +27,7 @@ function App() {
   useEffect(() => {
     async function fetchDecks() {
       const response = await fetch('http://localhost:5000/decks')
-      const newDecks = await response.json()
+      const newDecks: TDeck[] = await response.json()
       setDecks(newDecks)
     }
     fetchDecks()

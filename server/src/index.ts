@@ -4,6 +4,8 @@ import Deck from "./models/Deck";
 import { config } from 'dotenv'
 import cors from 'cors'
 
+type TDeck = { title: string }
+
 config()
 const PORT = 5000
 const app = express()
@@ -17,7 +19,8 @@ app.get('/decks', async (req, res) => {
 })//mostrando todos los registros en formato json
 
 app.post("/decks", async (req, res) => {
-    const newDeck = new Deck({ title: req.body.title })
+    const deckRequest: TDeck = req.body;
+    const newDeck = new Deck(deckRequest)
     const createdDeck = await newDeck.save()
     res.json(createdDeck)
 })//añadiendo un registro a la bd en formato json
