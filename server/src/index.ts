@@ -19,8 +19,7 @@ app.get('/decks', async (req, res) => {
 })//mostrando todos los registros en formato json
 
 app.post("/decks", async (req, res) => {
-    const deckRequest: TDeck = req.body;
-    const newDeck = new Deck(deckRequest)
+    const newDeck = new Deck(req.body as TDeck)
     const createdDeck = await newDeck.save()
     res.json(createdDeck)
 })//añadiendo un registro a la bd en formato json
