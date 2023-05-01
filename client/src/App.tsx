@@ -9,10 +9,19 @@ function App() {
 
   async function handleCreateDeck(e: FormEvent) {
     e.preventDefault()
-    await fetch('http://localhost:5000/decks', {
+    const response = await fetch('http://localhost:5000/decks', {
       method: 'POST', body: JSON.stringify({ title }), headers: { "Content-Type": "application/json" }
     })//conectando con el server y guardando el ingreso en formato json
+    const deck = await response.json()
+    setDecks([...decks, deck])
     setTitle("")//vaciando el input
+  }
+
+  async function handleDeleteDeck(deckId: string) {
+    await fetch(`http://localhost:5000/decks/${deckId}`, {
+      method: 'DELETE', body: JSON.stringify({ title })
+    })//conectando con el server y eliminando el ingreso
+    setDecks(decks.filter(deck => deck._id !== deckId))
   }
 
   useEffect(() => {
@@ -27,7 +36,11 @@ function App() {
   return (
     <div className='App'>
       <ul className='decks'>
-        {decks.map(deck => <li key={deck._id}>{deck.title}</li>)}
+        {decks.map(deck => (
+          <li key={deck._id}>{deck.title}
+            <button onClick={() => handleDeleteDeck(deck._id)}>X</button>
+          </li>
+        ))}
       </ul>
       <form onSubmit={handleCreateDeck}>
         <label htmlFor='deck-title'>Título del Deck</label>

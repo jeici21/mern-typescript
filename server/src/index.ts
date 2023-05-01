@@ -22,6 +22,12 @@ app.post("/decks", async (req, res) => {
     res.json(createdDeck)
 })//añadiendo un registro a la bd en formato json
 
+app.delete('/decks/:deckId', async (req, res) => {
+    const deckId = req.params.deckId
+    const deck = await Deck.findByIdAndDelete(deckId)
+    res.json(deck)
+})//borrando el registro seleccionado
+
 mongoose.connect(process.env.MONGO_URL!).then(() => {
     console.log(`Servidor escuchando en el puerto ${PORT}`)
     app.listen(PORT)
