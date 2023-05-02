@@ -21,14 +21,14 @@ function App() {
   async function handleUpdateDeck(deckId: string) {
     const title = prompt('Ingrese el nuevo título del deck')
     if (!title) return
-    const updatedDeck = await updateDeck(deckId, title) // llamar a updateDeck para actualizar el deck correspondiente
+    const updatedDeck = await updateDeck(deckId, title)
     setDecks(decks.map(deck => (deck._id === updatedDeck[0]._id ? updatedDeck[0] : deck)))
-  }
+  }//actualizando el deck correspondiente
 
   async function handleDeleteDeck(deckId: string) {
     await deleteDeck(deckId)
     setDecks(decks.filter(deck => deck._id !== deckId))
-  }
+  }//borrando el deck correspondiente
 
   useEffect(() => {
     async function fetchDecks() {
