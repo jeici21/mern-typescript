@@ -5,6 +5,7 @@ import { deleteDeck } from './api/deleteDeck';
 import { getDecks } from './api/getDecks';
 import { createDeck } from './api/createDeck';
 import { TDeck } from './api/config';
+import { updateDeck } from './api/updateDeck';
 
 function App() {
   const [decks, setDecks] = useState<TDeck[]>([])
@@ -15,6 +16,13 @@ function App() {
     const deck = await createDeck(title)
     setDecks([...decks, deck])
     setTitle("")//vaciando el input
+  }
+
+  async function handleUpdateDeck(deckId: string) {
+    const title = prompt('Ingrese el nuevo título del deck')
+    if (!title) return
+    const updatedDeck = await updateDeck(deckId, title) // llamar a updateDeck para actualizar el deck correspondiente
+    setDecks(decks.map(deck => (deck._id === updatedDeck[0]._id ? updatedDeck[0] : deck)))
   }
 
   async function handleDeleteDeck(deckId: string) {
@@ -28,7 +36,7 @@ function App() {
       setDecks(newDecks)
     }
     fetchDecks()
-  }, [])//recibiendo todos los registros en el front
+  }, [decks])//recibiendo todos los registros en el front
 
   return (
     <div className='container'>
@@ -37,7 +45,8 @@ function App() {
         <ul className='decks'>
           {decks.map(deck => (
             <li key={deck._id}>
-              <button onClick={() => handleDeleteDeck(deck._id)}>X</button>
+              <button className='edit' onClick={() => handleUpdateDeck(deck._id)}>E</button>
+              <button className='delete' onClick={() => handleDeleteDeck(deck._id)}>X</button>
               <Link to={`decks/${deck._id}`}>{deck.title}</Link>
             </li>
           ))}

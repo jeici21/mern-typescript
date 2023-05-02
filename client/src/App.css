@@ -36,9 +36,16 @@
   border-radius: 10px;
 }
 
-.decks li button {
+.decks li .delete {
   position: absolute;
   font-size: 10px;
   top: 5px;
   right: 5px;
+}
+
+.decks li .edit {
+  position: absolute;
+  font-size: 10px;
+  top: 5px;
+  left: 5px;
 }

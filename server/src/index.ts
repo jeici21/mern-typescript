@@ -19,7 +19,7 @@ app.use(express.json())//especificando que los datos se manejarán como json
 
 app.get('/decks', getDecksController)//mostrando todos los registros en formato json
 app.post("/decks", createDeckController)//añadiendo un registro a la bd en formato json
-app.put("/decks/:deckId", updateDeckController)
+app.put("/decks/:deckId", updateDeckController)//actualizando el título del registro en la bd
 app.delete('/decks/:deckId', deleteDeckController)//borrando el registro seleccionado
 app.get('/decks/:deckId', getDeckController)//mostrando la carta seleccionada
 app.post("/decks/:deckId/cards", createCardForDeckController)//añadiendo carta al deck seleccionado
