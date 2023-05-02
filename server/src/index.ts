@@ -24,7 +24,7 @@ app.put("/decks/:deckId", updateDeckController)//actualizando el título del reg
 app.delete('/decks/:deckId', deleteDeckController)//borrando el registro seleccionado
 app.get('/decks/:deckId', getDeckController)//mostrando la carta seleccionada
 app.post("/decks/:deckId/cards", createCardForDeckController)//añadiendo carta al deck seleccionado
-app.put("/decks/:deckId/cards/:index", updateCardOnDeckController)
+app.put("/decks/:deckId/cards/:index", updateCardOnDeckController)//editando carta del deck
 app.delete("/decks/:deckId/cards/:index", deleteCardOnDeckController)//borrando carta del deck
 
 mongoose.connect(process.env.MONGO_URL!).then(() => {

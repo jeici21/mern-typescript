@@ -38,9 +38,16 @@
     padding-top: 30px;
 }
 
-.cards li button {
+.cards li .delete {
     position: absolute;
     font-size: 10px;
     top: 5px;
     right: 5px;
+}
+
+.cards li .edit {
+    position: absolute;
+    font-size: 10px;
+    top: 5px;
+    left: 5px;
 }

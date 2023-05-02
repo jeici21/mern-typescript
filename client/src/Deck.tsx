@@ -5,6 +5,7 @@ import { getDeck } from "./api/getDeck"
 import { TDeck } from "./api/config"
 import { deleteCard } from "./api/deleteCard"
 import './Deck.css'
+import { updateCard } from "./api/updateCard"
 
 const Deck = () => {
     const [deck, setDeck] = useState<TDeck | undefined>()
@@ -18,6 +19,14 @@ const Deck = () => {
         setCards(serverCards)
         setText("")
     }//creando carta
+
+    async function handleUpdateCard(index: number) {
+        if (!deckId) return
+        const text = prompt('Ingrese el nuevo título del deck')
+        if (!text) return
+        const newDeck = await updateCard(deckId, index, text)
+        setCards(newDeck.cards)
+    }//editando carta
 
     async function handleDeleteCard(index: number) {
         if (!deckId) return
@@ -41,7 +50,8 @@ const Deck = () => {
             <ul className='cards'>
                 {cards.map((card, index) => (
                     <li key={index}>
-                        <button onClick={() => handleDeleteCard(index)}>X</button>
+                        <button className="edit" onClick={() => handleUpdateCard(index)}>E</button>
+                        <button className="delete" onClick={() => handleDeleteCard(index)}>X</button>
                         {card}
                     </li>
                 ))}
