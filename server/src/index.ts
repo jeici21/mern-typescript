@@ -9,6 +9,7 @@ import { createCardForDeckController } from "./controllers/createCardForDeckCont
 import { getDeckController } from "./controllers/getDeckController";
 import { deleteCardOnDeckController } from "./controllers/deleteCardOnDeckController";
 import { updateDeckController } from "./controllers/updateDeckController";
+import { updateCardOnDeckController } from "./controllers/updateCardOnDeckController";
 
 config()
 const PORT = 5000
@@ -23,7 +24,8 @@ app.put("/decks/:deckId", updateDeckController)//actualizando el título del reg
 app.delete('/decks/:deckId', deleteDeckController)//borrando el registro seleccionado
 app.get('/decks/:deckId', getDeckController)//mostrando la carta seleccionada
 app.post("/decks/:deckId/cards", createCardForDeckController)//añadiendo carta al deck seleccionado
-app.delete("/decks/:deckId/cards/:index", deleteCardOnDeckController)
+app.put("/decks/:deckId/cards/:index", updateCardOnDeckController)
+app.delete("/decks/:deckId/cards/:index", deleteCardOnDeckController)//borrando carta del deck
 
 mongoose.connect(process.env.MONGO_URL!).then(() => {
     console.log(`Servidor escuchando en el puerto ${PORT}`)
